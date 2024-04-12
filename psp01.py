@@ -1,23 +1,33 @@
-def insert_user_info_into_story(user_name, favorite_food, your_city):
+import os
+
+def insert_user_info_into_story(user_name, favorite_food, your_city, social_media_app):
+    # Get the directory of the current Python script
+    current_directory = os.path.dirname(os.path.realpath(__file__))
+    
+    # Construct the path to the input file in the same directory
+    input_file_path = os.path.join(current_directory, "short_story.txt")
+    
+    # Construct the path to the output file in the same directory
+    output_file_path = os.path.join(current_directory, "short_story_new.txt")
+
     # Read the contents of the short story
-    with open("d:\Python Project\short_story.txt", "r") as file:
-  # Replace "/path/to/short_story.txt" with the full path to your file
+    with open(input_file_path, "r") as file:
         story_content = file.read()
 
-    # Replace "yoki" with the user's name, "grub" with favorite food, and "home" with your city in the story
-    updated_story = story_content.replace("yoki", user_name).replace("grub", favorite_food).replace("home", your_city)
+    # Replace placeholders with user inputs in the story
+    updated_story = story_content.replace("yoki", user_name).replace("grub", favorite_food).replace("home", your_city).replace("social_media_app", social_media_app)
 
     # Write the updated story to a new file
-    with open("d:\Python Project\short_story_new.txt", "w") as new_file:
+    with open(output_file_path, "w") as new_file:
         new_file.write(updated_story)
 
 # Get user inputs
 user_name = input("Enter your name: ")
 favorite_food = input("Enter your favorite food: ")
 your_city = input("Enter your city: ")
+social_media_app = input("Enter your favorite social media app: ")
 
 # Insert the user's information into the story and write to a new file
-insert_user_info_into_story(user_name, favorite_food, your_city)
+insert_user_info_into_story(user_name, favorite_food, your_city, social_media_app)
 
 print("User information inserted into the story and saved as short_story_new.txt successfully!")
-

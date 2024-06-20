@@ -1,25 +1,41 @@
 import os
 
-def insert_user_info_into_story(user_name, favorite_food, your_city, social_media_app):
-    # Get the directory of the current Python script
-    current_directory = os.path.dirname(os.path.realpath(__file__))
-    
-    # Construct the path to the input file in the same directory
-    input_file_path = os.path.join(current_directory, "short_story.txt")
-    
-    # Construct the path to the output file in the same directory
-    output_file_path = os.path.join(current_directory, "short_story_new.txt")
+def insert_user_info_into_story(user_name, favorite_food, your_city, social_media_app, input_file="short_story.txt", output_file="short_story_new.txt"):
+    """
+    Insert user information into a story and save it to a new file.
 
-    # Read the contents of the short story
-    with open(input_file_path, "r") as file:
-        story_content = file.read()
+    Args:
+        user_name (str): User's name.
+        favorite_food (str): User's favorite food.
+        your_city (str): User's city.
+        social_media_app (str): User's favorite social media app.
+        input_file (str): The name of the input file containing the story template.
+        output_file (str): The name of the output file to save the updated story.
+    """
+    try:
+        # Get the directory of the current Python script
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        
+        # Construct the full path to the input and output files
+        input_file_path = os.path.join(current_directory, input_file)
+        output_file_path = os.path.join(current_directory, output_file)
 
-    # Replace placeholders with user inputs in the story
-    updated_story = story_content.replace("yoki", user_name).replace("grub", favorite_food).replace("home", your_city).replace("social_media_app", social_media_app)
+        # Read the contents of the short story
+        with open(input_file_path, "r") as file:
+            story_content = file.read()
 
-    # Write the updated story to a new file
-    with open(output_file_path, "w") as new_file:
-        new_file.write(updated_story)
+        # Replace placeholders with user inputs in the story
+        updated_story = story_content.format(user_name=user_name, favorite_food=favorite_food, your_city=your_city, social_media_app=social_media_app)
+
+        # Write the updated story to a new file
+        with open(output_file_path, "w") as new_file:
+            new_file.write(updated_story)
+
+        print(f"User information inserted into the story and saved as {output_file} successfully!")
+    except FileNotFoundError:
+        print(f"Error: {input_file} not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 # Get user inputs
 user_name = input("Enter your name: ")
@@ -29,5 +45,3 @@ social_media_app = input("Enter your favorite social media app: ")
 
 # Insert the user's information into the story and write to a new file
 insert_user_info_into_story(user_name, favorite_food, your_city, social_media_app)
-
-print("User information inserted into the story and saved as short_story_new.txt successfully!")
